@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: market_con
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: api_con
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://muminah:${POSTGRES_PASSWORD}@postgres:5432/market_db
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/app:rw
+
+
+volumes:
+  postgres_data:
