@@ -18,7 +18,10 @@ logging.basicConfig(
 logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 logging.getLogger('sqlalchemy.pool').setLevel(logging.WARNING)
 
-base_url = os.getenv('BASE_URL')
+base_url = "https://api.coingecko.com/api/v3/coins/{coin}/ohlc?vs_currency=usd&days=365"
+
+api_key = os.getenv('API_KEY')
+headers = {'x-cg-demo-api-key': api_key}
 
 
 def fetch_ohlc(coin: str) -> list | None:
@@ -33,7 +36,8 @@ def fetch_ohlc(coin: str) -> list | None:
     url = base_url.format(coin=coin)
 
     try:
-        response = requests.get(url, timeout=20)
+        response = requests.get(url, headers=headers, timeout=20)
+        logging.error(f'{coin}: status={response.status_code} body={response.text}')
         if response.status_code != 200:
             logging.error(f'{coin} Failed with Status {response.status_code}')
             return None
@@ -58,7 +62,6 @@ def transform_ohlc(coin: str, raw_data: list) -> pd.DataFrame:
     df['symbol'] = coin.upper()
     df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
     logging.info('Transformation complete')
-
     return df
 
 
@@ -123,4 +126,4 @@ if __name__ == "__main__":
              'cardano', 'dogecoin', 'avalanche-2', 'polkadot']
     for coin in coins:
         run_pipeline(coin)
-        time.sleep(2)
+        time.sleep(5)
