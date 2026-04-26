@@ -9,6 +9,7 @@ A production-style data engineering system that ingests near real-time cryptocur
 - [Overview](#overview)
 - [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
+- [Pipeline Flow](#-pipeline-flow)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
