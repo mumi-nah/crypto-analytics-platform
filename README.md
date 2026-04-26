@@ -50,7 +50,7 @@ This project solves that by:
 
 ## Architecture
 
-![Architecture flow](https://github.com/mumi-nah/crypto-analytics-platform/blob/ee10f36105112c0f1dd14689c9f8e94ccf220e0a/Images/flow.svg)
+![Architecture flow](Images/flow.svg)
 
 ---
 
