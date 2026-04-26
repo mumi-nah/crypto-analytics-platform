@@ -73,6 +73,37 @@ This project solves that by:
 
 ---
 
+## 🔄 Pipeline Flow
+
+1. Ingestion
+Fetches OHLC data for selected cryptocurrencies
+Supports multiple assets (Bitcoin, Ethereum, Solana, etc.)
+
+2. Transformation
+Converts raw API data into structured format
+Standardizes timestamps
+Adds asset identifiers
+
+3. Incremental Loading
+Queries the latest timestamp per asset
+Inserts only new records
+
+4. Storage
+Data is stored in a normalized schema:
+
+raw_prices
+
+symbol | timestamp | open | high | low | close
+
+processed_metrics
+
+symbol | timestamp | moving_avg | volatility
+
+5. Serving
+Raw prices and Processed metrics are served through the API
+
+---
+
 ## 📂 Project Structure
 
 ```
