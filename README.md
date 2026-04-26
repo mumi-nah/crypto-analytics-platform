@@ -1,6 +1,6 @@
-# Market Data Pipeline + Analytics API
+# 📊 Crypto Market Data Pipeline + Analytics API
 
-A production-style data engineering system that ingests near real-time cryptocurrency market data, computes analytics, and exposes clean structured data via a REST API.
+A production-style data engineering system that ingests near real-time cryptocurrency market data, stores, computes analytics, and serves clean cryptocurrency market data via a REST API.
 
 ---
 
@@ -34,7 +34,7 @@ A production-style data engineering system that ingests near real-time cryptocur
 
 ---
 
-## Overview
+## 🚀 Overview
 
 Investors and traders need access to timely, processed financial data to make decisions. Raw market data is noisy and not directly useful.
 
@@ -42,19 +42,21 @@ This project solves that by:
 
 - Ingesting OHLC (Open, High, Low, Close) market data from the CoinGecko API
 - Transforming and storing it in a structured PostgreSQL database
+- Applies incremental loading to avoid duplicate ingestion
 - Computing analytics indicators (moving average, volatility)
 - Exposing all data via a FastAPI backend with clear, documented endpoints
 - Running automatically on a weekly cron schedule
+- Is fully containerized using Docker
 
 ---
 
-## Architecture
+## 🧠 Architecture
 
 ![Architecture flow](Images/flow.svg)
 
 ---
 
-## Tech Stack
+## ⚙️ Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -71,7 +73,7 @@ This project solves that by:
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 market-data-pipeline/
@@ -155,7 +157,7 @@ API_KEY=your_api_key_here
 
 ---
 
-## Running the Project
+## 🐳 Running the Project
 
 ### With Docker
 
@@ -211,7 +213,7 @@ docker exec -it <db_container_name> psql -U YOUR_USER -d marketdata \
 
 ---
 
-## Scheduling
+## ⏱ Scheduling (Weekly Automation)
 
 The pipeline runs automatically via a **Linux cron job** once a week to fetch new candle data and recompute metrics.
 
@@ -487,10 +489,9 @@ Both metrics use `min_periods=1` so early rows are never empty — the window fi
 
 ## Future Improvements
 
+- Deploy to cloud
+- Replace cron with a workflow orchestrator (e.g., Airflow)
 - Add Redis caching for frequently queried endpoints
-- Support WebSocket endpoint for live price streaming
-- Add API key authentication for protected routes
 - Migrate from CoinGecko to Binance API for real-time (minute-level) candle data
 - Add Kafka for event-driven ingestion at scale
-- Build a frontend dashboard with candlestick charts
 - Add support for dynamically registering new coins via `POST /symbols`
