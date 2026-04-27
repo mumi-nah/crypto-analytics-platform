@@ -12,3 +12,6 @@ wheels/
 uv.lock
 .env
 .python-version
+
+.codacy/
+.github/
